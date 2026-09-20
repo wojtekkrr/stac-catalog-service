@@ -1,0 +1,12 @@
+.git
+
+__pycache__
+.mypy_cache
+
+.venv
+
+.vscode
+
+samples
+
+.gitignore

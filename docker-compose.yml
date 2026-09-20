@@ -1,6 +1,6 @@
 services:
   pgstac:
-    image: ghcr.io/stac-utils/pgstac:v0.9.12
+    image: ghcr.io/stac-utils/pgstac:v0.9.11
     environment:
       POSTGRES_USER: stac_user
       POSTGRES_PASSWORD: local_stac_password
@@ -21,6 +21,32 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      pgstac:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=2)",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    init: true
 
 volumes:
   pgstac_data:
