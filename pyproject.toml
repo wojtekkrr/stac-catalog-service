@@ -1,0 +1,34 @@
+[project]
+name = "stac-catalog-service"
+version = "0.1.0"
+description = "Metadata ingestion and STAC catalog search service"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "black>=26.5.1",
+    "mypy>=2.3.1",
+    "pylint>=4.0.8",
+    "taskipy>=1.14.1",
+]
+
+[tool.taskipy.tasks]
+typecheck = "python -m mypy ."
+lint = "python -m pylint app"
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+exclude = ['\\.venv']
+
+[tool.pylint.main]
+py-version = "3.12"
+disable = ["missing-module-docstring", "missing-function-docstring", "missing-class-docstring"]
+
+[tool.pylint.format]
+max-line-length = 88
