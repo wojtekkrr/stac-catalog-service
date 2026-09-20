@@ -1,0 +1,26 @@
+services:
+  pgstac:
+    image: ghcr.io/stac-utils/pgstac:v0.9.12
+    environment:
+      POSTGRES_USER: stac_user
+      POSTGRES_PASSWORD: local_stac_password
+      POSTGRES_DB: stac_catalog
+      PGUSER: stac_user
+      PGPASSWORD: local_stac_password
+      PGDATABASE: stac_catalog
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgstac_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgstac_data:
