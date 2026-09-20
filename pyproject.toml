@@ -3,7 +3,13 @@ name = "stac-catalog-service"
 version = "0.1.0"
 description = "Metadata ingestion and STAC catalog search service"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "defusedxml>=0.7,<1",
+    "pydantic>=2.12,<3",
+    "pystac>=1.15,<2",
+    "pyproj>=3.8.0",
+    "shapely>=2.1,<3",
+]
 
 [project.optional-dependencies]
 dev = [
@@ -11,6 +17,8 @@ dev = [
     "mypy>=2.3.1",
     "pylint>=4.0.8",
     "taskipy>=1.14.1",
+    "types-defusedxml>=0.7.0",
+    "types-shapely>=2.1,<3",
 ]
 
 [tool.taskipy.tasks]
